@@ -1,3 +1,12 @@
-@import 'tailwindcss';
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --medium-blue: #3498db; /* Example: Replace with your actual values */
+  --light-gray: #f0f0f0;
+  --dark-blue: #2c3e50;
+  --white: #ffffff;
+  --light-blue: #5dade2;
+  --gray: #e0e0e0;
+}
