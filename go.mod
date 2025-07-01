@@ -1,4 +1,4 @@
-module myproject
+module library-hub
 
 go 1.23
 
