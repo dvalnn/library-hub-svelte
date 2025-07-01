@@ -26,6 +26,7 @@
             webkitgtk_6_0
             nodejs_22
             wails
+            deno # for the lsp
 
             go
             gopls
