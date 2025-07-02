@@ -1,5 +1,6 @@
 <script>
     import AgentFilterRadio from "./AgentFilterRadio.svelte";
+    import SearchBar from "./SearchBar.svelte";
 
     let selected = $state("student");
 </script>
@@ -13,4 +14,9 @@
             Selected Agent: {selected}
         </p>
     </div>
+
+    <SearchBar
+        handleSearch={(input) => console.log("Searching for:", input)}
+        placeholder="Search agents..."
+    />
 </div>
