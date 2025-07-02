@@ -1,14 +1,11 @@
 <script lang="ts">
 	import "../app.css"; // Ensure this imports your global Tailwind CSS
-	import TabsRadioSelector from "$lib/TabsRadioSelector.svelte";
+	import TabsRadio from "./TabsRadio.svelte";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 
 	// Initialize activeTab based on the current route, or default to 'records'
 	let activeTab = $state($page.url.pathname.split("/")[1] || "records");
-	const setActiveTab = (tab: string) => {
-		activeTab = tab;
-	};
 
 	$effect(() => {
 		goto(`/${activeTab}`);
@@ -21,10 +18,10 @@
 	<header
 		class="fixed top-0 left-0 w-full bg-white shadow-md p-4 z-10 flex justify-center items-center h-16"
 	>
-		<TabsRadioSelector {activeTab} {setActiveTab} />
+		<TabsRadio bind:selected={activeTab} />
 	</header>
 
-	<main class="flex-1 pt-16">
+	<main class="flex-1 pt-16 bg-white">
 		{@render children()}
 	</main>
 </div>
@@ -36,5 +33,15 @@
 
 	.font-inter {
 		font-family: "Poppins", sans-serif;
+	}
+
+	html {
+		font-size: 10px;
+		scroll-behavior: smooth;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		user-select: none;
+		overflow-x: hidden;
+		background-color: var(--white);
 	}
 </style>
