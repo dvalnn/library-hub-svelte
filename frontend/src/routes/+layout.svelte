@@ -1,47 +1,40 @@
 <script lang="ts">
-	import "../app.css"; // Ensure this imports your global Tailwind CSS
+	import "../app.css";
 	import TabsRadio from "./TabsRadio.svelte";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 
-	// Initialize activeTab based on the current route, or default to 'records'
 	let activeTab = $state($page.url.pathname.split("/")[1] || "records");
 
+	// Only navigate if tab changes manually (avoid re-triggering on initial load)
 	$effect(() => {
-		goto(`/${activeTab}`);
+		const currentPath = $page.url.pathname.split("/")[1] || "records";
+		if (activeTab !== currentPath) {
+			goto(`/${activeTab}`);
+		}
 	});
 
-	let { children } = $props(); // Svelte 5+ way to get children slot
+	let { children } = $props();
 </script>
 
-<div class="min-h-screen flex flex-col bg-gray-50 font-inter">
+<div class="min-h-screen flex flex-col bg-gray-50 font-inter text-gray-900">
+	<!-- Top Navigation Bar -->
 	<header
-		class="fixed top-0 left-0 w-full bg-white shadow-md p-4 z-10 flex justify-center items-center h-16"
+		class="fixed top-0 left-0 right-0 z-10 bg-white shadow-md h-16 flex items-center justify-center px-4"
 	>
 		<TabsRadio bind:selected={activeTab} />
 	</header>
 
-	<main class="flex-1 pt-16 bg-white">
+	<!-- Main content area -->
+	<main class="flex-1 pt-20 px-4 sm:px-6 md:px-8 bg-gray-50">
 		{@render children()}
 	</main>
 </div>
 
 <style>
-	/* You can add any global styles here if needed, but Tailwind is preferred */
-	/* Ensure the font is loaded or available */
 	@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
 	.font-inter {
 		font-family: "Poppins", sans-serif;
-	}
-
-	html {
-		font-size: 10px;
-		scroll-behavior: smooth;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		user-select: none;
-		overflow-x: hidden;
-		background-color: var(--white);
 	}
 </style>

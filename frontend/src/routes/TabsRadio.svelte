@@ -3,16 +3,15 @@
     let { selected = $bindable("records") }: { selected: string } = $props();
 
     const labelClass = `
-        RadioLabel
+        TabsRadioLabel
         flex items-center justify-center grow basis-0
-        py-[10px] px-[3vw]
         font-poppins text-dark-blue
         border-b-2 border-t-2 border-transparent
         cursor-pointer transition-colors duration-300 opacity-60
         relative z-10 whitespace-nowrap
     `;
 
-    const inputClass = "RadioInput hidden";
+    const inputClass = "TabsRadioInput hidden";
 
     const config: RadioProps = {
         options: [
@@ -55,16 +54,16 @@
 </div>
 
 <style>
-    .TabsRadioSelector :global(.RadioLabel) {
+    .TabsRadioSelector :global(.TabsRadioLabel) {
         font-size: calc(1rem + 0.4vw);
     }
 
-    .TabsRadioSelector :global(.RadioLabel:hover) {
+    .TabsRadioSelector :global(.TabsRadioLabel:hover) {
         color: var(--light-blue);
         opacity: 90%;
     }
 
-    .TabsRadioSelector :global(.RadioInput:checked + label) {
+    .TabsRadioSelector :global(.TabsRadioInput:checked + label) {
         background-color: var(--white);
         color: var(--dark-blue);
         border-bottom: 2px solid var(--light-blue);

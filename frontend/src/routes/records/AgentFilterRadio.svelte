@@ -3,50 +3,48 @@
 
     let { selected = $bindable("student") }: { selected: string } = $props();
 
-    const inputClass = "RadioInput hidden";
-    const labelClass = `RadioLabel
-        cursor-pointer px-3 py-2 rounded-md border-2 
-        font-normal text-blue-900 border-blue-500 bg-white 
-        transition-all duration-200 
-        peer-checked:text-lg 
-        peer-checked:font-semibold 
-        peer-checked:border-blue-300
-        peer-checked:shadow-[0_0_0_2px] 
-        peer-checked:shadow-blue-500
+    const baseLabelClass = `
+        RadioLabel
+        cursor-pointer px-4 py-1.5
+        text-sm font-medium
+        text-gray-700 transition-colors duration-150
     `;
+
+    const inputClass = "RadioInput hidden";
 
     const config: RadioProps = {
         options: [
-            {
-                label: "Aluno",
-                value: "student",
-                inputClass,
-                labelClass,
-            },
-            {
-                label: "Professor",
-                value: "teacher",
-                inputClass,
-                labelClass,
-            },
-            {
-                label: "Assistente",
-                value: "assistant",
-                inputClass,
-                labelClass,
-            },
-            {
-                label: "Todos",
-                value: "everyone",
-                inputClass,
-                labelClass,
-            },
-        ],
+            { label: "Aluno", value: "student" },
+            { label: "Professor", value: "teacher" },
+            { label: "Assistente", value: "assistant" },
+            { label: "Todos", value: "everyone" },
+        ].map((opt) => ({
+            ...opt,
+            inputClass,
+            labelClass: baseLabelClass,
+        })),
         selected,
-        class: "flex items-center gap-2",
+        class: `gap-x-3 items-center bg-transparent`,
     };
 </script>
 
 <div class="AgentFilterRadioSelector">
     <Radio {...config} bind:selected />
 </div>
+
+<style>
+    .AgentFilterRadioSelector :global(.RadioLabel) {
+        font-size: calc(1rem + 0.3vw);
+    }
+
+    .AgentFilterRadioSelector :global(.RadioLabel:hover) {
+        color: var(--light-blue);
+        opacity: 90%;
+    }
+
+    .AgentFilterRadioSelector :global(.RadioInput:checked + label) {
+        background-color: var(--white);
+        color: var(--light-blue);
+        opacity: 100%;
+    }
+</style>
