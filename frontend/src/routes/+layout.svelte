@@ -17,7 +17,7 @@
 	let activeUrl = $derived($page.url.pathname);
 
 	const buttonClass =
-		"block mx-auto group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-6 w-6 text-gray-500 dark:text-gray-400";
+		"mx-auto group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-6 w-6 text-gray-500 dark:text-gray-400";
 
 	const activeClass = "font-bold text-primary-600 dark:text-primary-500";
 
@@ -39,18 +39,17 @@
 	];
 </script>
 
-<main class="flex flex-col min-h-screen">
+<main>
 	<div class="flex-1">
 		{@render children()}
 	</div>
 
 	<BottomNav
 		position="absolute"
-		innerClass={`grid grid-cols-${buttons.length}`}
+		innerClass={`flex justify-evenly items-center w-1/2`}
 	>
 		{#each buttons as button}
 			<BottomNavItem
-				btnName={button.name}
 				active={activeUrl === button.path}
 				{activeClass}
 				onclick={() => nav(button.path)}
