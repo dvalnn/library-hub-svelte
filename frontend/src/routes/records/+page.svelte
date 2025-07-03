@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ButtonGroup } from "flowbite-svelte";
+	import { Button, ButtonGroup, Search, Skeleton } from "flowbite-svelte";
 	import {
 		ChalkboardUserSolid,
 		UserGraduateSolid,
@@ -7,9 +7,11 @@
 		UsersGroupSolid,
 	} from "flowbite-svelte-icons";
 	import FloatingIsland from "$lib/components/FloatingIsland.svelte";
+	import { fade } from "svelte/transition";
 
 	let searchTerm = $state("");
 	let selectedFilter = $state("All");
+	let nSkeletons = $state(15);
 
 	// Function to handle search button click
 	function handleSearchClick() {
@@ -19,6 +21,7 @@
 			"with filter:",
 			selectedFilter,
 		);
+		nSkeletons = Math.floor(Math.random() * 20 + 1); // Randomize the number of skeletons between 1 and 20
 	}
 
 	function handleFilterClick(filter: string) {
@@ -37,30 +40,20 @@
 		{
 			name: "Students",
 			icon: UserGraduateSolid,
-			class: "rounded-l-lg sm:rounded-l-lg sm:rounded-r-none",
 		},
 		{
 			name: "Teachers",
 			icon: ChalkboardUserSolid,
-			class: "sm:border-l sm:border-r sm:rounded-none",
 		},
 		{
 			name: "Assistants",
 			icon: UserSolid,
-			class: "sm:rounded-r-none sm:rounded-l-none",
 		},
 		{
 			name: "All",
 			icon: UsersGroupSolid,
-			class: "rounded-r-lg sm:rounded-r-lg sm:rounded-l-none",
 		},
 	];
-
-	const inputClass = `
-		flex-grow block w-full px-4 py-2.5 text-gray-900 placeholder-gray-500
-		bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500
-		focus:outline-none text-base
-	`;
 
 	const searchButtonClass = `
 		flex-shrink-0 px-5 py-2.5 bg-primary-600 text-white font-medium text-base rounded-lg
@@ -69,16 +62,14 @@
 	`;
 </script>
 
-<FloatingIsland>
+<FloatingIsland classExtra="mt-4">
 	<div class="flex items-center w-full space-x-4">
-		<!-- Search input with its own border and focus styles -->
-		<input
+		<Search
 			placeholder="Search ..."
-			class={inputClass}
+			clearable
 			bind:value={searchTerm}
 			{onkeydown}
 		/>
-		<!-- Search button, now separate and fully rounded -->
 		<button onclick={handleSearchClick} class={searchButtonClass}>
 			Search
 		</button>
@@ -87,18 +78,30 @@
 		class="flex flex-wrap gap-2 sm:gap-0 w-full sm:w-auto justify-center"
 	>
 		{#each buttons as button}
-			<button
+			<Button
+				pill
 				onclick={() => handleFilterClick(button.name)}
-				class={`
-					flex items-center justify-center px-4 py-2.5 text-sm font-medium
-					transition-colors duration-200 ease-in-out border border-gray-300
-					${button.class}
-					${selectedFilter === button.name ? "bg-primary-600 text-white hover:text-white-600" : "hover:text-primary-600 "}
+				class={`px-4 py-2.5 text-sm font-medium 
+					${selectedFilter === button.name ? "text-primary-600" : ""}
 					`}
 			>
 				<button.icon class="w-5 h-5 mr 2" />
 				{button.name}
-			</button>
+			</Button>
 		{/each}
 	</ButtonGroup>
+</FloatingIsland>
+
+<FloatingIsland classExtra="max-h-[60vh] overflow-hidden mt-4 mb-4">
+	<div class="SearchResults mt-4 text-gray-600 max-h-full overflow-y-auto">
+		{#each Array(nSkeletons) as _, i (i)}
+			<div
+				in:fade={{ duration: 200 }}
+				out:fade={{ duration: 200 }}
+				class="mb-4"
+			>
+				<Skeleton />
+			</div>
+		{/each}
+	</div>
 </FloatingIsland>

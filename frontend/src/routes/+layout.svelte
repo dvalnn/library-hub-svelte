@@ -15,17 +15,13 @@
 	let { children } = $props();
 	let activeUrl = $derived(page.url.pathname);
 
-	const buttonClass =
-		"mx-auto group-hover:text-primary-600 dark:group-hover:text-primary-500 mb-1 h-6 w-6 text-gray-500 dark:text-gray-400";
-
-	const activeClass = "font-bold text-primary-600 dark:text-primary-500";
-
+	const activeClass = "font-bold text-primary-600";
 	const buttons = [
 		{ name: "Home", icon: HomeSolid, path: "/" },
 		{ name: "Records", icon: ArchiveSolid, path: "/records" },
 		{ name: "History", icon: CalendarMonthSolid, path: "/history" },
-		{ name: "Requisitions", icon: BookOpenSolid, path: "/requisitions" },
-		{ name: "Statistics", icon: ChartPieSolid, path: "/statistics" },
+		{ name: "Requests", icon: BookOpenSolid, path: "/requisitions" },
+		{ name: "Stats", icon: ChartPieSolid, path: "/statistics" },
 		{
 			name: "Settings",
 			icon: AdjustmentsHorizontalSolid,
@@ -35,24 +31,29 @@
 </script>
 
 <main class="flex flex-col h-screen">
-	<div class={ `
+	<div
+		class={`
 		bg-gray-500 font-sans
 		flex flex-col flex-grow items-center justify-center
-	` }>
+	`}
+	>
 		{@render children()}
 	</div>
 
 	<BottomNav
-		position="sticky"
-		innerClass={`bottom-0 flex justify-evenly items-center w-1/2 min-h-16`}
+		{activeUrl}
+		{activeClass}
+		position="absolute"
+		navType="border"
+		innerClass={`grid grid-cols-${buttons.length} `}
 	>
 		{#each buttons as button}
 			<BottomNavItem
 				href={button.path}
+				btnClass="hover:text-white hover:bg-primary-600 active:bg-primary-900"
 			>
-				<button.icon
-					class={`${buttonClass} ${activeUrl === button.path ? activeClass : ""}`}
-				/>
+				<button.icon />
+				{button.name}
 			</BottomNavItem>
 		{/each}
 	</BottomNav>
