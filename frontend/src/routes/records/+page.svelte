@@ -6,6 +6,7 @@
 		UserSolid,
 		UsersGroupSolid,
 	} from "flowbite-svelte-icons";
+	import FloatingIsland from "$lib/components/FloatingIsland.svelte";
 
 	let searchTerm = $state("");
 	let selectedFilter = $state("All");
@@ -18,12 +19,18 @@
 			"with filter:",
 			selectedFilter,
 		);
-		// In a real application, you would trigger a search API call here
 	}
 
-	// Function to handle filter button clicks
 	function handleFilterClick(filter: string) {
 		selectedFilter = filter;
+	}
+
+	function onkeydown(event: KeyboardEvent) {
+		if (event.key === "Enter") {
+			handleSearchClick();
+		} else if (event.key === "Escape") {
+			searchTerm = "";
+		}
 	}
 
 	const buttons = [
@@ -48,29 +55,31 @@
 			class: "rounded-r-lg sm:rounded-r-lg sm:rounded-l-none",
 		},
 	];
+
+	const inputClass = `
+		flex-grow block w-full px-4 py-2.5 text-gray-900 placeholder-gray-500
+		bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500
+		focus:outline-none text-base
+	`;
+
+	const searchButtonClass = `
+		flex-shrink-0 px-5 py-2.5 bg-primary-600 text-white font-medium text-base rounded-lg
+		transition-transform duration-200
+		hover:scale-110 active:bg-primary-900
+	`;
 </script>
 
-<div class="w-full max-w-2xl bg-white shadow-lg rounded-xl p-6 space-y-6">
+<FloatingIsland>
 	<div class="flex items-center w-full space-x-4">
 		<!-- Search input with its own border and focus styles -->
 		<input
 			placeholder="Search ..."
-			class="flex-grow block w-full px-4 py-2.5 text-gray-900 placeholder-gray-500 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:outline-none text-base"
+			class={inputClass}
 			bind:value={searchTerm}
-			onkeydown={(e: KeyboardEvent) => {
-				if (e.key === "Enter") {
-					handleSearchClick();
-				} else if (e.key === "Escape") {
-					searchTerm = ""; // Clear search term on Escape
-				}
-			}}
+			{onkeydown}
 		/>
 		<!-- Search button, now separate and fully rounded -->
-		<button
-			onclick={handleSearchClick}
-			class="flex-shrink-0 px-5 py-2.5 bg-gray-600 text-white font-medium text-base rounded-lg hover:bg-primary-600 transition duration-150 ease-in-out"
-			aria-label="Search button"
-		>
+		<button onclick={handleSearchClick} class={searchButtonClass}>
 			Search
 		</button>
 	</div>
@@ -92,4 +101,4 @@
 			</button>
 		{/each}
 	</ButtonGroup>
-</div>
+</FloatingIsland>

@@ -36,7 +36,7 @@
 
 <main class="flex flex-col h-screen">
 	<div class={ `
-		bg-gray-50 dark:bg-gray-900 font-sans
+		bg-gray-500 font-sans
 		flex flex-col flex-grow items-center justify-center
 	` }>
 		{@render children()}
