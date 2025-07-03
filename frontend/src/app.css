@@ -1,12 +1,102 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --medium-blue: #3498db; /* Example: Replace with your actual values */
-  --light-gray: #f0f0f0;
-  --dark-blue: #2c3e50;
-  --white: #ffffff;
-  --light-blue: #5dade2;
-  --gray: #e0e0e0;
+@plugin 'flowbite/plugin';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --color-primary-50: #fff5f2;
+    --color-primary-100: #fff1ee;
+    --color-primary-200: #ffe4de;
+    --color-primary-300: #ffd5cc;
+    --color-primary-400: #ffbcad;
+    --color-primary-500: #fe795d;
+    --color-primary-600: #ef562f;
+    --color-primary-700: #eb4f27;
+    --color-primary-800: #cc4522;
+    --color-primary-900: #a5371b;
+
+    --color-secondary-50: #f0f9ff;
+    --color-secondary-100: #e0f2fe;
+    --color-secondary-200: #bae6fd;
+    --color-secondary-300: #7dd3fc;
+    --color-secondary-400: #38bdf8;
+    --color-secondary-500: #0ea5e9;
+    --color-secondary-600: #0284c7;
+    --color-secondary-700: #0369a1;
+    --color-secondary-800: #075985;
+    --color-secondary-900: #0c4a6e;
+}
+
+@source "../node_modules/flowbite-svelte/dist";
+@source "../node_modules/flowbite-svelte-icons/dist";
+
+@layer base {
+    /* disable chrome cancel button */
+    input[type="search"]::-webkit-search-cancel-button {
+      display: none;
+    }
+
+    html {
+		-webkit-text-size-adjust: 100%;
+		font-family:
+			Inter,
+			ui-sans-serif,
+			system-ui,
+			-apple-system,
+			Segoe UI,
+			Roboto,
+			Helvetica Neue,
+			Arial,
+			Noto Sans,
+			sans-serif,
+			Apple Color Emoji,
+			Segoe UI Emoji,
+			Segoe UI Symbol,
+			Noto Color Emoji;
+		line-height: 1.5;
+		-moz-tab-size: 4;
+		tab-size: 4;
+	}
+
+	h1,
+	h2,
+	h3,
+	p,
+	ul,
+	li,
+	table {
+		@apply tracking-wide dark:text-white;
+	}
+
+	h1 {
+		@apply text-primary-800 dark:text-primary-400 my-8 text-3xl;
+	}
+
+	h2 {
+		@apply my-6 text-2xl;
+	}
+
+	h3 {
+		@apply my-5 text-xl;
+	}
+
+	p {
+		@apply my-3 text-lg;
+	}
+
+	code {
+		@apply text-primary-700 dark:text-primary-400;
+	}
+
+	#mainContent > pre {
+		@apply mx-auto my-4 w-full overflow-auto rounded-xl border border-gray-200 bg-gray-50 bg-gradient-to-r p-2 text-sm text-gray-600 sm:p-6 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400;
+	}
+}
+
+@layer components {
+	/* overwrite runeswebkit.css using !important */
+	.dark_bg_theme {
+		@apply dark:bg-stone-900;
+	}
 }
