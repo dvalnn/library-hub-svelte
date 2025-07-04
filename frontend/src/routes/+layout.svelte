@@ -45,7 +45,8 @@
 		{activeClass}
 		position="absolute"
 		navType="border"
-		innerClass={`grid grid-cols-${buttons.length} `}
+		outerClass="mt-4"
+		innerClass="grid grid-flow-col grid-cols-6"
 	>
 		{#each buttons as button}
 			<BottomNavItem
